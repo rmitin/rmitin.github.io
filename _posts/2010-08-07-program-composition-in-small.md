@@ -9,7 +9,9 @@ A definition defines an abstract interface possibly comprising variable declarat
 
 {% highlight oberon %}
 definition {public} A.D;
+
   procedure P;
+
 end D.
 {% endhighlight %}
 
@@ -21,12 +23,15 @@ In the example below object A.B.O implements definition A.D and procedure P with
 
 {% highlight oberon %}
 object {ref} A.B.O implements A.D;
+
   var {public}
     a: object{A.D};
+
   procedure {public} P implements A.D.P;
   begin
     writeln("A.D.P")
   end P;
+
 end O.
 {% endhighlight %}
 
@@ -34,13 +39,17 @@ Implements clause implies an implicit import of A.D. in the example above. Howev
 
 {% highlight oberon %}
 object {ref} A.B.O implements D;
+
   import A.D as D;
+
   var {public}
     a: object{D};
+
   procedure {public} P implements D.P;
   begin
     writeln("A.D.P")
   end P;
+
 end O.
 {% endhighlight %}
 
@@ -50,9 +59,12 @@ As you can see from the example below the transitivity rule does not apply here.
 
 {% highlight oberon %}
 module Main;
-  import A.B.O, A.D;
-  var
-    o: object{A.D};
+
+import A.B.O, A.D;
+
+var
+  o: object{A.D};
+
 begin
   o := new A.B.O;
   o.P
@@ -63,7 +75,9 @@ To clarify the case with ‘topmost’ level definitions, objects and implementa
 
 {% highlight oberon %}
 object T;
+
   . . . .
+
 end T.
 {% endhighlight %}
 
@@ -71,7 +85,9 @@ is shorthand for
 
 {% highlight oberon %}
 module ;
+
   type T = object . . . end T;
+
 end .
 {% endhighlight %}
 
@@ -81,7 +97,9 @@ In the example below a definition K is a refinement of definition D. It adds a n
 
 {% highlight oberon %}
 definition {public} B.K refines A.D;
+
   procedure U;
+
 end K.
 {% endhighlight %}
 
@@ -89,14 +107,17 @@ Any object that implements definition B.K must implement both procedures P and U
 
 {% highlight oberon %}
 object {ref} A.B.O2 implements B.K;
+
   procedure {public} P implements B.K.P;
   begin
     writeln("B.K.P")
   end P;
+
   procedure {public} U implements B.K.U;
   begin
     writeln("B.K.U")
   end U;
+
 end O2.
 {% endhighlight %}
 
@@ -106,15 +127,20 @@ An implementation defines an aggregation of variable and method implementations 
 
 {% highlight oberon %}
 definition {public} A.T;
+
   procedure S;
+
   procedure L;
+
 end T.
 
 implementation A.T;
+
   procedure S implements A.T.S;
   begin
     writeln("A.T.S")
   end S;
+
 end T.
 {% endhighlight %}
 
@@ -122,19 +148,24 @@ Implementation A.T provides a default implementation for method S which can be r
 
 {% highlight oberon %}
 object {ref} A.B.O3 implements B.K, A.T;
-var {public}
+
+  var {public}
+
   procedure {public} P implements B.K.P;
   begin
     writeln("B.K.P")
   end P;
+
   procedure {public} U implements B.K.U;
   begin
     writeln("B.K.U")
   end U;
+
   procedure {public} L implements A.T.L;
   begin
     writeln("A.T.L")
   end L;
+
 end O3.
 {% endhighlight %}
 
@@ -151,11 +182,14 @@ defines an interface type that implements both definitions A.T and B.K.
 
 {% highlight oberon %}
 module Main;
+
 import A.B.O3, B.K, A.T;
+
 var
   o: A.B.O3;
   kt: object{A.T, B.K};
   t: object{A.T};
+
 begin
   o := new A.B.O3;
   t := o;
