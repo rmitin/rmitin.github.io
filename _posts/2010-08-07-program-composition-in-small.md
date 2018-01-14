@@ -35,7 +35,7 @@ object {ref} A.B.O implements A.D;
 end O.
 {% endhighlight %}
 
-Implements clause implies an implicit import of A.D. in the example above. However we still can write an explicit import. Explicit import allows to give a local nickname for the imported unit. Example below is an equialen to the example above.
+Implements clause implies an implicit import of A.D. in the example above. However we still can write an explicit import. Explicit import allows to give a local nickname for the imported unit. Example below is an equivalent to the example above.
 
 {% highlight oberon %}
 object {ref} A.B.O implements D;
